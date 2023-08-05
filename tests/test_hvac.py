@@ -31,21 +31,21 @@ def test_HVAC_on(typicalHvac):
 	assert typicalHvac.LastHeatingDuration == 1
 	
 def test_HVAC_Pass_ignite(typicalHvac):
-	"""Tests the typical HVAC when the heater is on for more 30 seconds
+    """Tests the typical HVAC when the heater is on for more 30 seconds
 	
 	Arguments:
 		typicalHvac {HVAC} -- the hvac test fixture object
 	"""
-	startupEnergy = (184 + 460) * 30
-	typicalHvac.TurnHeatingOn()
-	for i in range(31):
-		typicalHvac.SimulateOneSecond()
-	totalPowerUsed = typicalHvac.TotalPowerUsed
-	assert typicalHvac.HeatingIsOn == True
-	assert typicalHvac.LastHeatingDuration == 31
+    startupEnergy = (184 + 460) * 30
+    typicalHvac.TurnHeatingOn()
+    for _ in range(31):
+        typicalHvac.SimulateOneSecond()
+    totalPowerUsed = typicalHvac.TotalPowerUsed
+    assert typicalHvac.HeatingIsOn == True
+    assert typicalHvac.LastHeatingDuration == 31
 
-	# gas energy + startup energy + vent blower engery + gas valve energy
-	assert totalPowerUsed == startupEnergy + 12 + 29307 + 184
+    # gas energy + startup energy + vent blower engery + gas valve energy
+    assert totalPowerUsed == startupEnergy + 12 + 29307 + 184
 
 
 def test_HVAC_cooling_on(typicalHvac: HVAC):
@@ -99,18 +99,18 @@ def test_HVAC_Average_watts(typicalHvac: HVAC):
 
 
 def test_HVAC_Average_watts_per_day(typicalHvac: HVAC):
-	"""Tests the The average watts per second calculation
+    """Tests the The average watts per second calculation
 	
 	Arguments:
 		typicalHvac {HVAC} -- the hvac test fixture object
 	"""
-	typicalHvac.TurnCoolingOn()
-	for i in range(3600*24):
-		typicalHvac.SimulateOneSecond()
+    typicalHvac.TurnCoolingOn()
+    for _ in range(3600*24):
+        typicalHvac.SimulateOneSecond()
 
-	assert typicalHvac.GetAverageWattsPerSecond() == (3740 + 587)
-	assert typicalHvac.GetAverageWattsPerSecond() * 24 == 103848
-	assert typicalHvac.TotalPowerUsed / 3600 == 103848
+    assert typicalHvac.GetAverageWattsPerSecond() == (3740 + 587)
+    assert typicalHvac.GetAverageWattsPerSecond() == 4327
+    assert typicalHvac.TotalPowerUsed == 373852800
 
 def test_HVAC_Average_watts_for_small_time_frame(typicalHvac: HVAC):
 	"""Tests the The average watts per second calculation

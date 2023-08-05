@@ -67,7 +67,7 @@ print()
 numberOfHeatingOn = 0
 for outsideTemperature in loganOutsideTemperatures:
 	# iterate through one hour with the same temperature
-	for	i in range(3600):
+	for _ in range(3600):
 		hvacBuilding.step(outsideTemperature)
 		if not hvac.HeatingIsShuttingDown and hvac.HeatingIsOn and hvacBuilding.current_temperature > 18.8889:#21:
 			print("Turning the Heater Off")

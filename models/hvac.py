@@ -207,8 +207,8 @@ class HVAC():
 		# check whether it is shutting down, this is a first check in case they decide to shutdown in the middle of the startup
 		if self.HeatingIsShuttingDown:
 			self.__lastHeatingEnergyInputed = self.__determine_shutdown_heat_energy()
-			if self.__HeatingShutoffDuration < (-1 * self.__gas_vent_shut_off_delta.total_seconds()) :
-				heatingSum = heatingSum + self.__gas_vent_blower_energy
+			if self.__HeatingShutoffDuration < (-1 * self.__gas_vent_shut_off_delta.total_seconds()):
+				heatingSum += self.__gas_vent_blower_energy
 			if self.__HeatingShutoffDuration < (-1 * self.__gas_valve_shut_off_delta.total_seconds()) :
 				heatingSum = heatingSum + self.__house_blower_energy
 			else:
@@ -217,7 +217,6 @@ class HVAC():
 				self.HeatingIsShuttingDown = False
 				self.TotalDurationHeatingOn = self.TotalDurationHeatingOn + self.LastHeatingDuration
 
-		# heater is starting up
 		elif self.LastHeatingDuration < self.__house_blower_on_delay.total_seconds():
 			# Pre gas turns on
 			if self.LastHeatingDuration < self.__flame_ignitor_duration.total_seconds():
@@ -232,7 +231,7 @@ class HVAC():
 			self.__lastHeatingEnergyInputed = self.__gas_rate_energy # calculation for the amount of heat input to the house
 			self.TotalGasEnergyUsed = self.TotalGasEnergyUsed + self.__gas_rate_energy
 			heatingSum = heatingSum + self.__gas_valve_energy + self.__house_blower_energy + self.__gas_rate_energy + self.__gas_vent_blower_energy
-			
+
 		return heatingSum
 
 
@@ -242,11 +241,10 @@ class HVAC():
 		# check if Cooling is on
 		if not self.CoolingIsOn:
 			return 0.0
-		
+
 		# The blower and compressor are running
 		self.__lastCoolingEnergyInputed = self.__air_conditioning_energy
-		acSum = self.__air_conditioning_energy + self.__house_blower_energy
-		return acSum
+		return self.__air_conditioning_energy + self.__house_blower_energy
 
 	def __determine_shutdown_heat_energy(self):
 		"""Used to calculate the amount of energy that is still left in the heat register that could be added to the house
@@ -293,8 +291,7 @@ class HVAC():
 		if(totalGasEnergyUsed == 0.0):
 			return 0.0
 
-		dthUsed = self.ConvertWattsToDTH(totalGasEnergyUsed, self.TotalDurationHeatingOn)
-		return dthUsed
+		return self.ConvertWattsToDTH(totalGasEnergyUsed, self.TotalDurationHeatingOn)
 
 
 	def ConvertWattsToDTH(self, watts, seconds:int):

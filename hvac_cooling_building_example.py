@@ -31,7 +31,7 @@ print()
 numberOfCoolingTurnOn = 0
 for outsideTemperature in loganOutsideTemperatures:
 	# iterate through one hour with the same temperature
-	for	i in range(3600):
+	for _ in range(3600):
 		hvacBuilding.step(outsideTemperature)
 		if hvac.CoolingIsOn and hvacBuilding.current_temperature < 17.3333:#21:
 			print("Turning the AC Off")

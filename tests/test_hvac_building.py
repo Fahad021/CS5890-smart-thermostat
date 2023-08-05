@@ -17,36 +17,36 @@ def hvacBuilding():
         conditioned_floor_area=conditioned_floor_area)
 
 def test_HVAC_off(hvacBuilding: HvacBuilding):
-	"""Tests the typical building gets colder and colder when the heater and cooler are both off
+    """Tests the typical building gets colder and colder when the heater and cooler are both off
 	
 	Arguments:
 		hvacBuilding {HvacBuilding} -- the hvac Building test fixture object
 	"""
-	# check that the temperature is getting cooler every time
-	currentBuildingTemperature = 22
-	for i in range(10):
-		hvacBuilding.step(0)
-		assert hvacBuilding.current_temperature < currentBuildingTemperature
-		currentBuildingTemperature = hvacBuilding.current_temperature
+    # check that the temperature is getting cooler every time
+    currentBuildingTemperature = 22
+    for _ in range(10):
+        hvacBuilding.step(0)
+        assert hvacBuilding.current_temperature < currentBuildingTemperature
+        currentBuildingTemperature = hvacBuilding.current_temperature
 		
 def test_HVAC_on(hvacBuilding: HvacBuilding):
-	"""Tests the typical building gets colder and colder when the heater and cooler are both off
+    """Tests the typical building gets colder and colder when the heater and cooler are both off
 	
 	Arguments:
 		hvacBuilding {HvacBuilding} -- the hvac Building test fixture object
 	"""
-	# check that the temperature is getting cooler every time
-	currentBuildingTemperature = 22
-	# turn on the furnace, it shouldn't change for the first while till we have completed the startup
-	# so it will say at 22 for the first section
-	hvacBuilding.building_hvac.TurnHeatingOn()
+    # check that the temperature is getting cooler every time
+    currentBuildingTemperature = 22
+    # turn on the furnace, it shouldn't change for the first while till we have completed the startup
+    # so it will say at 22 for the first section
+    hvacBuilding.building_hvac.TurnHeatingOn()
 
-	for i in range(60):
-		hvacBuilding.step(55)
-		assert hvacBuilding.current_temperature > currentBuildingTemperature
-		currentBuildingTemperature = hvacBuilding.current_temperature
-	
-	assert hvacBuilding.building_hvac.TotalPowerUsed > 0
+    for _ in range(60):
+        hvacBuilding.step(55)
+        assert hvacBuilding.current_temperature > currentBuildingTemperature
+        currentBuildingTemperature = hvacBuilding.current_temperature
+
+    assert hvacBuilding.building_hvac.TotalPowerUsed > 0
 
 def test_WattsToDTH(hvacBuilding: HvacBuilding):
 	"""Tests the conversion of watts to DTH

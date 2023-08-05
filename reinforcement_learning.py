@@ -71,25 +71,25 @@ agent = PPOAgent(
 def episode_finished(r):
     if r.episode % 10 == 0:
         print("Finished episode {ep} after {ts} timesteps".format(ep=r.episode + 1, ts=r.timestep + 1))
-        print("Episode reward: {}".format(r.episode_rewards[-1]))
-        print("Average of last 10 rewards: {}".format(np.mean(r.episode_rewards[-10:])))
+        print(f"Episode reward: {r.episode_rewards[-1]}")
+        print(f"Average of last 10 rewards: {np.mean(r.episode_rewards[-10:])}")
     return True
 
 runner = Runner(agent, environment)
 
 runner.run(num_timesteps=3600, num_episodes=3, episode_finished= episode_finished)
 
+outsideTemperature = 1.1
 # Poll new state from client
 #for outsideTemperature in loganOutsideTemperatures:
-for i in range(2):
-	outsideTemperature = 1.1
-	# iterate through one hour with the same temperature
-	for	i in range(3600):
-		state = hvacBuilding.get_state(outsideTemperature)
-		action = agent.act(state, True)
-		reward = hvacBuilding.Act(action)
-		agent.observe(reward=reward, terminal=False)
-		hvacBuilding.step(outsideTemperature)
+for _ in range(2):
+    	# iterate through one hour with the same temperature
+    for _ in range(3600):
+        state = hvacBuilding.get_state(outsideTemperature)
+        action = agent.act(state, True)
+        reward = hvacBuilding.Act(action)
+        agent.observe(reward=reward, terminal=False)
+        hvacBuilding.step(outsideTemperature)
 	
 		#currently the only state is to turn on cooling or turn off
 		# if not hvac.HeatingIsShuttingDown and hvac.HeatingIsOn and hvacBuilding.current_temperature > 18.8889:#21:

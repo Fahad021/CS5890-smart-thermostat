@@ -132,16 +132,26 @@ class HvacBuilding():
 		print()
 		print("     RESULTS    ")
 		print()
-		print("The Number of times the furnace turns on: " + str(self.building_hvac.NumberOfTimesHeatingTurnedOn))
-		print("The Number of times the AC turns on: " + str(self.building_hvac.NumberOfTimesCoolingTurnedOn))
-		print("The Current Temperature: " + str(self.current_temperature) + "C")
-		print("The total Electrical power used: " + str(self.building_hvac.GetElectricKilowattHours()) + "KWH")
-		print("The total Time: " + str(self.building_hvac.TotalTimeInSeconds))
-		print("The total Time Heating was on: " + str(self.building_hvac.TotalDurationHeatingOn))
-		print("The total Time Cooling was on: " + str(self.building_hvac.TotalDurationCoolingOn))
-		print("The Total Gas Energy Used: " + str(self.building_hvac.GetGasDTH()) + " DTH")
-		print("Electrical Cost: $" + str(self.CalculateElectricEneregyCost()))
-		print("Gas Cost: $" + str(self.CalculateGasEneregyCost()))
+		print(
+			f"The Number of times the furnace turns on: {str(self.building_hvac.NumberOfTimesHeatingTurnedOn)}"
+		)
+		print(
+			f"The Number of times the AC turns on: {str(self.building_hvac.NumberOfTimesCoolingTurnedOn)}"
+		)
+		print(f"The Current Temperature: {str(self.current_temperature)}C")
+		print(
+			f"The total Electrical power used: {str(self.building_hvac.GetElectricKilowattHours())}KWH"
+		)
+		print(f"The total Time: {str(self.building_hvac.TotalTimeInSeconds)}")
+		print(
+			f"The total Time Heating was on: {str(self.building_hvac.TotalDurationHeatingOn)}"
+		)
+		print(
+			f"The total Time Cooling was on: {str(self.building_hvac.TotalDurationCoolingOn)}"
+		)
+		print(f"The Total Gas Energy Used: {str(self.building_hvac.GetGasDTH())} DTH")
+		print(f"Electrical Cost: ${str(self.CalculateElectricEneregyCost())}")
+		print(f"Gas Cost: ${str(self.CalculateGasEneregyCost())}")
 
 
 	def CalculateGasEneregyCost(self, dollarsPerDTH = 6.53535):

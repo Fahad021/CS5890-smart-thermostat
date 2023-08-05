@@ -40,10 +40,5 @@ class HvacBuildingTracker():
 		return self.__convertCArrayToF(self.__OutsideTempArr)
 
 	def __convertCArrayToF(self, C_Array):
-		f_array = []
-		for c in C_Array:
-			#convert 
-			f = (c * (9/5))+32
-			f_array.append(f)
-		return f_array
+		return [(c * (9/5))+32 for c in C_Array]
 
